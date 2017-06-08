@@ -20,7 +20,6 @@ public class MovieParser {
     public static List<Movie> parseMovieResponse(String response) throws JSONException {
         JSONObject responseObject = new JSONObject(response);
         JSONArray array = responseObject.getJSONArray("results");
-        Log.d("MP",response);
         List<Movie> movies = new ArrayList<>();
 
         for(int i=0;i<array.length();++i){
