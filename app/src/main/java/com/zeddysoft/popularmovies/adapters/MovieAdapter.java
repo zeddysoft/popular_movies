@@ -1,0 +1,68 @@
+package com.zeddysoft.popularmovies.adapters;
+
+import android.content.Context;
+import android.media.Image;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.squareup.picasso.Picasso;
+import com.zeddysoft.popularmovies.R;
+import com.zeddysoft.popularmovies.models.Movie;
+
+import java.util.List;
+
+/**
+ * Created by azeez on 6/7/17.
+ */
+
+public class MovieAdapter extends BaseAdapter {
+
+    private final LayoutInflater mLayoutInflater;
+    List<Movie> movies;
+    Context context;
+
+    public MovieAdapter(Context context, List<Movie> movies){
+        Log.d("Movies....",movies.toString());
+        this.movies = movies;
+        this.context= context;
+        mLayoutInflater = LayoutInflater.from(context);
+    }
+    @Override
+    public int getCount() {
+        return movies.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return movies.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View gridView;
+        if (convertView == null) {
+            gridView = mLayoutInflater.inflate(
+                    R.layout.image_post_item, parent, false);
+
+        } else {
+            gridView = convertView;
+        }
+
+        Movie movie = (Movie) getItem(position);
+        ImageView imageView = (ImageView)gridView.findViewById(R.id.poster_item_view);
+        Log.d("Movie poster url",movie.getPosterPath());
+        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+movie.getPosterPath()).into(imageView);
+
+        return gridView;
+    }
+}

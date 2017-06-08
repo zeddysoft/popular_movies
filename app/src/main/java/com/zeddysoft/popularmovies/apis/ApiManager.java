@@ -1,6 +1,7 @@
 package com.zeddysoft.popularmovies.apis;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -8,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.zeddysoft.popularmovies.App;
 
 /**
  * Created by Azeez.Taiwo on 6/7/2017.
@@ -22,10 +24,9 @@ public class ApiManager {
 
     RequestQueue queue;
     static ApiManager apiManager;
-    Context context;
 
     private ApiManager(){
-        queue = Volley.newRequestQueue(context);
+        queue = Volley.newRequestQueue(App.getContext());
     }
 
     public static ApiManager getApiManager(){
@@ -38,6 +39,7 @@ public class ApiManager {
     }
 
     public void fetchPopularMovies(final MovieApiCallback movieApiCallback){
+        Log.d("Reached here","true");
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 BASE_URL+POPULAR_MOVIE_ENDPOINT+"?api_key="+API_KEY
                 ,
@@ -49,6 +51,7 @@ public class ApiManager {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
                 movieApiCallback.onErrorResponse(error);
             }
         });
