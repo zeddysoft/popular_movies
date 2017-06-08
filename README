@@ -1,0 +1,4 @@
+For this app to work, you must add your API key from themoviedb.org into the strings.xml file
+in the string tag (with name: api_key) already created
+
+Thank you.
