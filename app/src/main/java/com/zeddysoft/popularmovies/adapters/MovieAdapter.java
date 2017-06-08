@@ -27,7 +27,6 @@ public class MovieAdapter extends BaseAdapter {
     Context context;
 
     public MovieAdapter(Context context, List<Movie> movies){
-        Log.d("Movies....",movies.toString());
         this.movies = movies;
         this.context= context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -60,8 +59,7 @@ public class MovieAdapter extends BaseAdapter {
 
         Movie movie = (Movie) getItem(position);
         ImageView imageView = (ImageView)gridView.findViewById(R.id.poster_item_view);
-        Log.d("Movie poster url",movie.getPosterPath());
-        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+movie.getPosterPath()).into(imageView);
+        Picasso.with(context).load(context.getString(R.string.movie_image_base_url)+movie.getPosterPath()).into(imageView);
 
         return gridView;
     }

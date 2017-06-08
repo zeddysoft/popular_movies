@@ -8,12 +8,12 @@
         android:id="@+id/movie_posters_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="200dp"
+        android:columnWidth="120dp"
         android:gravity="center"
+        android:horizontalSpacing="0dp"
         android:numColumns="2"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="none"
-        android:verticalSpacing="1dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="0dp"
 
         >
 
@@ -23,5 +23,6 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_gravity="center" />
 </FrameLayout>

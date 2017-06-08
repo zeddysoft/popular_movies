@@ -2,4 +2,20 @@
     <string name="app_name">PopularMovies</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
     <string name="movie_intent_key">movie</string>
+    <string name="mark_as_favourite">MARK AS \nFAVOURITE</string>
+    <string name="mark_as_favourite_response">Added to your favourite list</string>
+    <string name="movie_rating_suffix">/10</string>
+    <string name="movie_image_base_url">http://image.tmdb.org/t/p/w185/</string>
+    <string name="sort_by_most_popular">Sort by most popular</string>
+    <string name="sort_by_highest_rated">Sort by highest rated</string>
+    <string name="movie_details_title">Movie Detail</string>
+    <string name="no_network_message">Your phone is currently not connected to the internet, please connect and try again</string>
+
+    <!-- Insert your API key here -->
+    <string name="api_key"></string>
+
+    <string name="base_url">http://api.themoviedb.org/3</string>
+    <string name="popular_movie_endpoint">/movie/popular</string>
+    <string name="highest_rated_endpoint">/movie/top_rated</string>
+    <string name="query_parameter">/?api_key=</string>
 </resources>

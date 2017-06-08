@@ -10,20 +10,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.zeddysoft.popularmovies.App;
+import com.zeddysoft.popularmovies.R;
 
 /**
  * Created by Azeez.Taiwo on 6/7/2017.
  */
 
 public class ApiManager {
-    private static final String API_KEY = "c0040567876f8c727e4a4ff2df55fdec";
-    private final String BASE_URL = "http://api.themoviedb.org/3";
-    private final String POPULAR_MOVIE_ENDPOINT = "/movie/popular";
-
-
 
     RequestQueue queue;
     static ApiManager apiManager;
+    static Context context;
 
     private ApiManager(){
         queue = Volley.newRequestQueue(App.getContext());
@@ -32,6 +29,7 @@ public class ApiManager {
     public static ApiManager getApiManager(){
 
         if(apiManager == null){
+            context = App.getContext();
             apiManager = new ApiManager();
             return apiManager;
         }
@@ -39,9 +37,11 @@ public class ApiManager {
     }
 
     public void fetchPopularMovies(final MovieApiCallback movieApiCallback){
-        Log.d("Reached here","true");
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                BASE_URL+POPULAR_MOVIE_ENDPOINT+"?api_key="+API_KEY
+                context.getString(R.string.base_url)+
+                        context.getString(R.string.popular_movie_endpoint)+
+                        context.getString(R.string.query_parameter)+
+                        context.getString(R.string.api_key)
                 ,
                 new Response.Listener<String>() {
                     @Override
@@ -51,7 +51,6 @@ public class ApiManager {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error",error.toString());
                 movieApiCallback.onErrorResponse(error);
             }
         });
@@ -59,9 +58,33 @@ public class ApiManager {
     }
 
 
-   public interface MovieApiCallback{
+    public void fetchHighestRatedMovies(final MovieApiCallback movieApiCallback){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                context.getString(R.string.base_url)+
+                        context.getString(R.string.highest_rated_endpoint)+
+                        context.getString(R.string.query_parameter)+
+                        context.getString(R.string.api_key)
+                ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        movieApiCallback.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                movieApiCallback.onErrorResponse(error);
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+
+    public interface MovieApiCallback{
         void onResponse(String response);
         void onErrorResponse(VolleyError error);
     }
+
+
 }
 

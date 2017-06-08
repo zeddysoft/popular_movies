@@ -2,14 +2,87 @@ package com.zeddysoft.popularmovies.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.zeddysoft.popularmovies.R;
+import com.zeddysoft.popularmovies.models.Movie;
 
 public class MovieDetailActivity extends AppCompatActivity {
+
+    private ImageView posterThumbnail;
+    private TextView releaseDate;
+    private TextView overview;
+    private TextView movieRating;
+    private Button markAsFavourite;
+    private TextView movieTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        enableActionBar();
+        setActionBarTitle();
+
+        Movie movie = getIntent().getExtras().getParcelable(getString(R.string.movie_intent_key));
+
+        initViews();
+        loadDataIntoViews(movie);
+    }
+
+    private void setActionBarTitle() {
+        String movieDetailsTitle = getString(R.string.movie_details_title);
+        getSupportActionBar().setTitle(movieDetailsTitle);
+    }
+
+    private void enableActionBar() {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int selectedItemId = item.getItemId();
+        if(selectedItemId == android.R.id.home) {
+            onBackPressed();
+            return  true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void loadDataIntoViews(Movie movie) {
+        releaseDate.setText(movie.getReleaseDate().substring(0,4));
+        overview.setText(movie.getOverview());
+        String userRating = movie.getVoteAverage()+ getString(R.string.movie_rating_suffix);
+        movieRating.setText(userRating);
+        movieTitle.setText(movie.getOriginalTitle());
+
+        Picasso.with(this).load(getString(R.string.movie_image_base_url)+movie.getPosterPath()).into(posterThumbnail);
+
+
+    }
+
+    private void initViews() {
+        posterThumbnail = (ImageView) findViewById(R.id.movie_poster_thumbnail);
+        releaseDate = (TextView) findViewById(R.id.movie_release_date);
+        movieRating = (TextView) findViewById(R.id.movie_rating);
+        markAsFavourite = (Button) findViewById(R.id.mark_as_favourite_btn);
+        overview = (TextView) findViewById(R.id.overview);
+        movieTitle = (TextView) findViewById(R.id.movie_title);
+
+        markAsFavourite.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MovieDetailActivity.this,getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

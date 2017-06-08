@@ -1,9 +1,14 @@
 package com.zeddysoft.popularmovies.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -15,6 +20,7 @@ import com.zeddysoft.popularmovies.adapters.MovieAdapter;
 import com.zeddysoft.popularmovies.apis.ApiManager;
 import com.zeddysoft.popularmovies.models.Movie;
 import com.zeddysoft.popularmovies.parsers.MovieParser;
+import com.zeddysoft.popularmovies.utils.NetworkUtils;
 
 import org.json.JSONException;
 
@@ -49,25 +55,60 @@ public class MoviePostersActivity extends AppCompatActivity
 
         apiManager=ApiManager.getApiManager();
 
-        showMostPopularMoviesOnly();
+        if(isPhoneConnectedToInternet()){
+            showMostPopularMoviesOnly();
+        }else{
+            showMessage(R.string.no_network_message);
+        }
+
     }
 
-    private void showMostPopularMoviesOnly(){
+    private void showMessage(int messageId) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage(getString(messageId));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_poster_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_by_most_popular:
+                showMostPopularMoviesOnly();
+                return true;
+            case R.id.sort_by_highest_rated:
+                showHighestRatedMoviesOnly();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void showMostPopularMoviesOnly(){
+        progressBar.setVisibility(View.VISIBLE);
         apiManager.fetchPopularMovies(this);
     }
 
     private void showHighestRatedMoviesOnly(){
-
-    }
-
-    private void showMovieDetailScreen(){
-
+        progressBar.setVisibility(View.VISIBLE);
+        apiManager.fetchHighestRatedMovies(this);
     }
 
     @Override
     public void onResponse(String response) {
-        Log.d("Response",response);
         progressBar.setVisibility(View.GONE);
         try {
             movies = MovieParser.parseMovieResponse(response);
@@ -83,4 +124,7 @@ public class MoviePostersActivity extends AppCompatActivity
         progressBar.setVisibility(View.GONE);
     }
 
+    public boolean isPhoneConnectedToInternet() {
+        return NetworkUtils.isPhoneConnectedToInternet();
+    }
 }
