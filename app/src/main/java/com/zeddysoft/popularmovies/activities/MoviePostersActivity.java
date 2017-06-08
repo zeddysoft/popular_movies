@@ -121,7 +121,6 @@ public class MoviePostersActivity extends AppCompatActivity
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        error.printStackTrace();
         progressBar.setVisibility(View.GONE);
     }
 
