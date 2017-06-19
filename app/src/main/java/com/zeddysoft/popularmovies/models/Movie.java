@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 public class Movie implements Parcelable{
 
+    private long id;
     private String posterPath;
     private String originalTitle;
     private String overview;
@@ -24,6 +25,7 @@ public class Movie implements Parcelable{
         setOverview(jsonObject.getString("overview"));
         setVoteAverage(jsonObject.getDouble("vote_average"));
         setReleaseDate(jsonObject.getString("release_date"));
+        setId(jsonObject.getLong("id"));
     }
 
     protected Movie(Parcel in) {
@@ -32,6 +34,7 @@ public class Movie implements Parcelable{
         overview = in.readString();
         voteAverage = in.readDouble();
         releaseDate = in.readString();
+        id = in.readLong();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -86,6 +89,14 @@ public class Movie implements Parcelable{
         this.releaseDate = releaseDate;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -98,5 +109,6 @@ public class Movie implements Parcelable{
         dest.writeString(overview);
         dest.writeDouble(voteAverage);
         dest.writeString(releaseDate);
+        dest.writeLong(id);
     }
 }

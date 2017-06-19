@@ -2,18 +2,34 @@ package com.zeddysoft.popularmovies.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 import com.zeddysoft.popularmovies.R;
+import com.zeddysoft.popularmovies.adapters.MovieAdapter;
+import com.zeddysoft.popularmovies.adapters.TrailerAdapter;
+import com.zeddysoft.popularmovies.apis.ApiManager;
 import com.zeddysoft.popularmovies.models.Movie;
+import com.zeddysoft.popularmovies.models.Trailer;
+import com.zeddysoft.popularmovies.parsers.MovieParser;
+import com.zeddysoft.popularmovies.parsers.TrailerParser;
 
-public class MovieDetailActivity extends AppCompatActivity {
+import org.json.JSONException;
+
+import java.util.List;
+
+public class MovieDetailActivity extends AppCompatActivity implements ApiManager.MovieApiCallback{
 
     private ImageView posterThumbnail;
     private TextView releaseDate;
@@ -21,6 +37,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView movieRating;
     private Button markAsFavourite;
     private TextView movieTitle;
+    private ApiManager apiManager;
+    private ProgressBar progressBar;
+    private RecyclerView trailer_list;
+    private List<Trailer> trailers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +53,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         Movie movie = getIntent().getExtras().getParcelable(getString(R.string.movie_intent_key));
 
         initViews();
+        apiManager= ApiManager.getApiManager();
         loadDataIntoViews(movie);
+
+
     }
 
     private void setActionBarTitle() {
@@ -66,10 +89,17 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Picasso.with(this).load(getString(R.string.movie_image_base_url)+movie.getPosterPath()).into(posterThumbnail);
 
+        fetchMovieTrailers(movie.getId());
 
     }
 
+    private void fetchMovieTrailers(long id) {
+        apiManager.fetchMovieTrailers(this,id);
+    }
+
     private void initViews() {
+        trailer_list = (RecyclerView) findViewById(R.id.trailer_list);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         posterThumbnail = (ImageView) findViewById(R.id.movie_poster_thumbnail);
         releaseDate = (TextView) findViewById(R.id.movie_release_date);
         movieRating = (TextView) findViewById(R.id.movie_rating);
@@ -84,5 +114,27 @@ public class MovieDetailActivity extends AppCompatActivity {
                 Toast.makeText(MovieDetailActivity.this,getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+
+        progressBar.setVisibility(View.GONE);
+        try {
+            trailers = TrailerParser.parseTrailerResponse(response);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            trailer_list.setLayoutManager(mLayoutManager);
+            trailer_list.setItemAnimator(new DefaultItemAnimator());
+            trailer_list.setAdapter(new TrailerAdapter(trailers));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        progressBar.setVisibility(View.GONE);
     }
 }

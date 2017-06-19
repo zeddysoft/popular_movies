@@ -10,12 +10,13 @@
     <string name="sort_by_highest_rated">Sort by highest rated</string>
     <string name="movie_details_title">Movie Detail</string>
     <string name="no_network_message">Your phone is currently not connected to the internet, please connect and try again</string>
-
+    <string name="trailers">Trailers:</string>
     <!-- Insert your API key here -->
-    <string name="api_key"></string>
+    <string name="api_key">c0040567876f8c727e4a4ff2df55fdec</string>
 
     <string name="base_url">http://api.themoviedb.org/3</string>
     <string name="popular_movie_endpoint">/movie/popular</string>
     <string name="highest_rated_endpoint">/movie/top_rated</string>
-    <string name="query_parameter">/?api_key=</string>
+    <string name="trailer_endpoint"></string>
+    <string name="query_parameter">\?api_key=</string>
 </resources>
