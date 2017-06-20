@@ -42,12 +42,22 @@ public class TrailerAdapter  extends RecyclerView.Adapter<TrailerAdapter.Trailer
         return trailers.size();
     }
 
-    public class TrailerViewHolder extends RecyclerView.ViewHolder {
+    public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
 
         public TrailerViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
+            name.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    interface TrailerPlayListener{
+
     }
 }
