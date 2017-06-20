@@ -1,5 +1,7 @@
 package com.zeddysoft.popularmovies.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,7 +31,8 @@ import org.json.JSONException;
 
 import java.util.List;
 
-public class MovieDetailActivity extends AppCompatActivity implements ApiManager.MovieApiCallback{
+public class MovieDetailActivity extends AppCompatActivity
+        implements ApiManager.MovieApiCallback, TrailerAdapter.TrailerPlayListener{
 
     private ImageView posterThumbnail;
     private TextView releaseDate;
@@ -126,7 +129,7 @@ public class MovieDetailActivity extends AppCompatActivity implements ApiManager
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             trailer_list.setLayoutManager(mLayoutManager);
             trailer_list.setItemAnimator(new DefaultItemAnimator());
-            trailer_list.setAdapter(new TrailerAdapter(trailers));
+            trailer_list.setAdapter(new TrailerAdapter(trailers,this));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -136,5 +139,17 @@ public class MovieDetailActivity extends AppCompatActivity implements ApiManager
     @Override
     public void onErrorResponse(VolleyError error) {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onTrailerClicked(Trailer trailer) {
+        viewAndPlayTrailer(trailer);
+    }
+
+    private void viewAndPlayTrailer(Trailer trailer) {
+        String url = "https://www.youtube.com/watch?v=" + trailer.getKey();
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

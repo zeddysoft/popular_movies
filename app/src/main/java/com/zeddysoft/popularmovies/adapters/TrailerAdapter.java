@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zeddysoft.popularmovies.R;
+import com.zeddysoft.popularmovies.models.Movie;
 import com.zeddysoft.popularmovies.models.Trailer;
 
 import java.util.List;
@@ -18,9 +20,11 @@ import java.util.List;
 public class TrailerAdapter  extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
 
     List<Trailer> trailers;
+    TrailerPlayListener listener;
 
-    public TrailerAdapter(List<Trailer> trailers){
+    public TrailerAdapter(List<Trailer> trailers, TrailerPlayListener listener){
         this.trailers = trailers;
+        this.listener = listener;
     }
 
     @Override
@@ -44,20 +48,22 @@ public class TrailerAdapter  extends RecyclerView.Adapter<TrailerAdapter.Trailer
 
     public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
+        public ImageView play;
 
         public TrailerViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            name.setOnClickListener(this);
+            play = (ImageView) view.findViewById(R.id.play);
+            play.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            listener.onTrailerClicked(trailers.get(getLayoutPosition()));
         }
     }
 
-    interface TrailerPlayListener{
-
+    public interface TrailerPlayListener{
+       void onTrailerClicked(Trailer trailer);
     }
 }

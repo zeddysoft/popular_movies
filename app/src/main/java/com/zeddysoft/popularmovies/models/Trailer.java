@@ -31,7 +31,4 @@ public class Trailer {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
 }
