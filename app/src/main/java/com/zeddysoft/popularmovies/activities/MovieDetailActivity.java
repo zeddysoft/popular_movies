@@ -63,6 +63,7 @@ public class MovieDetailActivity extends AppCompatActivity
     }
 
     private void setActionBarTitle() {
+        
         String movieDetailsTitle = getString(R.string.movie_details_title);
         getSupportActionBar().setTitle(movieDetailsTitle);
     }
