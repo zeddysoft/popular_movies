@@ -7,4 +7,5 @@
     <color name="movie_details_header">#009485</color>
     <color name="teal">#64FFDA</color>
     <color name="black">#000000</color>
+    <color name="light_grey">#d0d0d0</color>
 </resources>
