@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zeddysoft.popularmovies.R;
 
@@ -14,17 +15,20 @@ import com.zeddysoft.popularmovies.R;
  */
 public class OverviewFragment extends Fragment {
 
-
     public OverviewFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_overview, container, false);
+        View view =  inflater.inflate(R.layout.fragment_overview, container, false);
+
+        TextView overview = (TextView) view.findViewById(R.id.overview);
+
+        String movieOverview = getArguments().getString(getString(R.string.overview_data_key));
+        overview.setText(movieOverview);
+
+        return view;
     }
 
 }

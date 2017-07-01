@@ -91,9 +91,16 @@ public class MoviePostersActivity extends AppCompatActivity
             case R.id.sort_by_highest_rated:
                 showHighestRatedMoviesOnly();
                 return true;
+            case R.id.my_favourites:
+                showFavouriteMovies();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showFavouriteMovies() {
+
     }
 
 
