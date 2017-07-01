@@ -103,7 +103,6 @@ public class MoviePostersActivity extends AppCompatActivity
 
     }
 
-
     private void showMostPopularMoviesOnly(){
         progressBar.setVisibility(View.VISIBLE);
         apiManager.fetchPopularMovies(this);
