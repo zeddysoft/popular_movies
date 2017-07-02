@@ -40,7 +40,6 @@ public class MoviePostersActivity extends AppCompatActivity
     private GridView moviePosterView;
     private ProgressBar progressBar;
     private List<Movie> movies;
-    private SQLiteDatabase mDb;
     private MovieLab movieLab;
     private MovieAdapter movieAdapter;
 

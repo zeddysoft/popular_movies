@@ -11,12 +11,14 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
 import com.zeddysoft.popularmovies.R;
 import com.zeddysoft.popularmovies.apis.ApiManager;
@@ -31,52 +33,45 @@ import com.zeddysoft.popularmovies.utils.ZoomOutPageTransformer;
 
 import java.util.List;
 
-public class MovieDetailActivity extends AppCompatActivity
-        {
+public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView posterThumbnail;
     private TextView releaseDate;
-    private TextView overview;
     private TextView movieRating;
     private FloatingActionButton markAsFavourite;
     private TextView movieTitle;
-    private ApiManager apiManager;
-    private ProgressBar progressBar;
-    private RecyclerView trailer_list;
-    private List<Trailer> trailers;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ViewPager viewpager;
     private ScreenSlidePagerAdapter mPagerAdapter;
     private TabLayout movieDetailsTab;
     private NestedScrollView scrollView;
     private Movie movie;
-            private MovieLab movieLab;
+    private MovieLab movieLab;
+    private Toolbar toolbar;
 
-            @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         movieLab = MovieLab.getInstance(this);
-//
-//        enableActionBar();
-//        setActionBarTitle();
-
         movie = getIntent().getExtras().getParcelable(getString(R.string.movie_intent_key));
 
         initViews();
+        enableActionBar();
 
         loadDataIntoViews(movie);
     }
 
-    private void setActionBarTitle() {
-
-        String movieDetailsTitle = getString(R.string.movie_details_title);
-        getSupportActionBar().setTitle(movieDetailsTitle);
-    }
-
     private void enableActionBar() {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            collapsingToolbarLayout.setTitle(" ");
+
+        }
     }
 
     @Override
@@ -93,13 +88,16 @@ public class MovieDetailActivity extends AppCompatActivity
     private void loadDataIntoViews(Movie movie) {
         double userRating = movie.getVoteAverage();
         movieRating.setText(userRating + "");
-//        movieTitle.setText(movie.getOriginalTitle());
-
+        movieTitle.setText(movie.getOriginalTitle());
+        releaseDate.setText(movie.getReleaseDate().substring(0, 4));
         Picasso.with(this).load(getString(R.string.movie_image_base_url) + movie.getPosterPath()).into(posterThumbnail);
 
     }
 
     private void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        releaseDate = (TextView) findViewById(R.id.tv_movie_language_date);
+        movieTitle = (TextView) findViewById(R.id.tv_movie_title);
         movieRating = (TextView) findViewById(R.id.movie_ratings);
         movieDetailsTab = (TabLayout) findViewById(R.id.movie_details_tab);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -135,10 +133,10 @@ public class MovieDetailActivity extends AppCompatActivity
         @Override
         public Fragment getItem(int position) {
 
-                    Bundle bundle = new Bundle();
+            Bundle bundle = new Bundle();
             switch (position) {
                 case 0:
-                    bundle.putString(getString(R.string.overview_data_key),movie.getOverview());
+                    bundle.putString(getString(R.string.overview_data_key), movie.getOverview());
                     Fragment overviewFragment = new OverviewFragment();
                     overviewFragment.setArguments(bundle);
                     return overviewFragment;

@@ -21,12 +21,10 @@
             app:contentScrim="@color/dark_blue2"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_marginBottom="56dp"
-                >
+                android:layout_marginBottom="56dp">
 
 
                 <ImageView
@@ -48,28 +46,12 @@
                     android:id="@+id/tv_movie_title"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_movie_genres"
                     android:layout_centerHorizontal="true"
-                    android:textAlignment="center"
                     android:maxLines="2"
-                    android:layout_above="@+id/tv_movie_language_date"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="25sp"
-
-                    />
-
-
-
-
-
-                <TextView
-                    android:id="@+id/tv_movie_language_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:textSize="12sp"
-                    android:layout_above="@+id/tv_movie_genres"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="35dp"
 
                     />
 
@@ -78,10 +60,19 @@
                     android:id="@+id/tv_movie_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_movie_language_date"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="60dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_movie_language_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="35dp"
-
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -91,11 +82,12 @@
                     android:layout_height="30dp"
                     android:layout_alignBottom="@+id/tv_movie_title"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/ic_star_favorite"
                     android:layout_marginRight="35dp"
+                    android:background="@drawable/ic_star_favorite"
                     android:visibility="gone"
 
                     />
+
                 <TextView
                     android:id="@+id/movie_ratings"
                     android:layout_width="wrap_content"
@@ -108,22 +100,20 @@
                     android:textSize="30sp"
                     android:textStyle="bold"
 
-
                     />
+
                 <TextView
                     android:id="@+id/tv_ratings_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/light_grey"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="15dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/total_rating"
+                    android:textColor="@color/light_grey"
                     android:textSize="20sp" />
-
-
 
 
             </RelativeLayout>
@@ -133,17 +123,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:minHeight="?attr/actionBarSize"
                 android:gravity="top"
+                android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-
-                />
-
-
-
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/movie_details_tab"
@@ -173,14 +157,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -191,11 +173,8 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_star_favorite"
-        app:layout_anchor="@id/nested_scrollview"
-        app:layout_anchorGravity="bottom|right|end"
         app:backgroundTint="@color/light_grey"
-        />
-
-
+        app:layout_anchor="@id/nested_scrollview"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
