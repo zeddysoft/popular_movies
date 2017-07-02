@@ -63,4 +63,10 @@ public class MovieAdapter extends BaseAdapter {
 
         return gridView;
     }
+
+    public void update(List<Movie> movies){
+        this.movies.clear();
+        this.movies.addAll(movies);
+        notifyDataSetChanged();
+    }
 }

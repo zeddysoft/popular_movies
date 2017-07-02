@@ -81,6 +81,28 @@ public class ApiManager {
     }
 
 
+    public void fetchReviews(final MovieApiCallback movieApiCallback, long movieId){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                context.getString(R.string.base_url)+
+                        "/movie/"+movieId +"/reviews"+
+                        context.getString(R.string.query_parameter)+
+                        context.getString(R.string.api_key)
+                ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        movieApiCallback.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                movieApiCallback.onErrorResponse(error);
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
     public void fetchHighestRatedMovies(final MovieApiCallback movieApiCallback){
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 context.getString(R.string.base_url)+

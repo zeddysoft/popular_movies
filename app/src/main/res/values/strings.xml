@@ -6,11 +6,13 @@
     <string name="mark_as_favourite_response">Added to your favourite list</string>
     <string name="movie_rating_suffix">/10</string>
     <string name="movie_image_base_url">http://image.tmdb.org/t/p/w185/</string>
-    <string name="sort_by_most_popular">Sort by most popular</string>
-    <string name="sort_by_highest_rated">Sort by highest rated</string>
+    <string name="sort_by_most_popular">Popular movies</string>
+    <string name="sort_by_highest_rated">Top-Rated movies</string>
+    <string name="my_favourites">My Favourites</string>
     <string name="movie_details_title">Movie Detail</string>
     <string name="no_network_message">Your phone is currently not connected to the internet, please connect and try again</string>
     <string name="trailers">Trailers:</string>
+
     <!-- Insert your API key here -->
     <string name="api_key">c0040567876f8c727e4a4ff2df55fdec</string>
 
@@ -19,7 +21,9 @@
     <string name="highest_rated_endpoint">/movie/top_rated</string>
     <string name="trailer_endpoint"></string>
     <string name="query_parameter">\?api_key=</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="overview_data_key">overview.key</string>
+    <string name="trailer_data_key">trailer.key</string>
+    <string name="review_data_key">review.key</string>
+    <string name="movie_poster_data_key">movies.key</string>
+    <string name="total_rating">/10</string>
 </resources>

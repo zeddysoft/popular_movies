@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    >
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
         >
 
         <ImageView
-            android:id="@+id/play"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/ic_play_arrow"
+            android:id="@+id/trailer_thumbnail"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
             />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/trailer_title"
+            android:textColor="@color/light_grey"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="19sp"
-            android:layout_marginLeft="30dp"
-            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_toRightOf="@id/trailer_thumbnail"
+            android:textSize="17sp"
+            android:textAllCaps="true"
             />
 
+    </RelativeLayout>
 
-    </LinearLayout>
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"/>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
