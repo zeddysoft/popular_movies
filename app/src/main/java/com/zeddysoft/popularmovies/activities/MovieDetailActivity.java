@@ -1,8 +1,5 @@
 package com.zeddysoft.popularmovies.activities;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,34 +10,24 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 import com.zeddysoft.popularmovies.R;
-import com.zeddysoft.popularmovies.adapters.MovieAdapter;
-import com.zeddysoft.popularmovies.adapters.TrailerAdapter;
 import com.zeddysoft.popularmovies.apis.ApiManager;
+import com.zeddysoft.popularmovies.database.MovieLab;
 import com.zeddysoft.popularmovies.fragments.OverviewFragment;
 import com.zeddysoft.popularmovies.fragments.ReviewFragment;
 import com.zeddysoft.popularmovies.fragments.TrailerFragment;
 import com.zeddysoft.popularmovies.models.Movie;
 import com.zeddysoft.popularmovies.models.Trailer;
-import com.zeddysoft.popularmovies.parsers.MovieParser;
-import com.zeddysoft.popularmovies.parsers.TrailerParser;
 import com.zeddysoft.popularmovies.utils.ZoomOutPageTransformer;
 
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -63,11 +50,13 @@ public class MovieDetailActivity extends AppCompatActivity
     private TabLayout movieDetailsTab;
     private NestedScrollView scrollView;
     private Movie movie;
+            private MovieLab movieLab;
 
-    @Override
+            @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        movieLab = MovieLab.getInstance(this);
 //
 //        enableActionBar();
 //        setActionBarTitle();
@@ -130,6 +119,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
+                movieLab.addFavouriteMovie(movie);
                 Toast.makeText(MovieDetailActivity.this, getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
             }
         });
