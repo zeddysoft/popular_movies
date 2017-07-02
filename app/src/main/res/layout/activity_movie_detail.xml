@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical">
-
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/dark_blue2"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
@@ -40,31 +40,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.8"
-                    android:background="@color/dark_blue2" />
+                    android:background="@color/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/tv_movie_title"
+                    android:id="@+id/movie_title_TV"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/tv_movie_genres"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:maxLines="2"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="25sp"
-
                     />
-
-
-                <TextView
-                    android:id="@+id/tv_movie_genres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/tv_movie_language_date"
-                    android:layout_marginLeft="35dp"
-                    android:layout_marginTop="60dp"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_movie_language_date"
@@ -80,7 +68,7 @@
                     android:id="@+id/favorite_view"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignBottom="@+id/tv_movie_title"
+                    android:layout_alignBottom="@+id/movie_title_TV"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="35dp"
                     android:background="@drawable/ic_star_favorite"
@@ -96,10 +84,9 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="50dp"
                     android:layout_toLeftOf="@id/tv_ratings_total"
-                    android:textColor="@color/maroon_blue"
+                    android:textColor="@color/colorAccent"
                     android:textSize="30sp"
                     android:textStyle="bold"
-
                     />
 
                 <TextView
@@ -115,9 +102,7 @@
                     android:textColor="@color/light_grey"
                     android:textSize="20sp" />
 
-
             </RelativeLayout>
-
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -134,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
-                android:background="@color/dark_blue2"
+                android:background="@color/colorPrimary"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/black"
                 app:tabIndicatorHeight="2dp"
@@ -142,7 +127,7 @@
                 app:tabSelectedTextColor="@color/light_grey"
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
 
-                app:tabTextColor="@color/maroon_blue" />
+                app:tabTextColor="@color/colorAccent" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

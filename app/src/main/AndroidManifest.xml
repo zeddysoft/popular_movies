@@ -23,6 +23,12 @@
         <activity android:name=".activities.MovieDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
+        
+        <provider
+            android:authorities="com.zeddysoft.popularmovies"
+            android:name="com.zeddysoft.popularmovies.database.MovieContentProvider"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

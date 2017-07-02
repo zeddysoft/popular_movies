@@ -1,5 +1,7 @@
 package com.zeddysoft.popularmovies.activities;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.zeddysoft.popularmovies.R;
 import com.zeddysoft.popularmovies.apis.ApiManager;
+import com.zeddysoft.popularmovies.database.MovieContract;
+import com.zeddysoft.popularmovies.database.MovieContract.FavouriteMovieEntry;
 import com.zeddysoft.popularmovies.database.MovieLab;
 import com.zeddysoft.popularmovies.fragments.OverviewFragment;
 import com.zeddysoft.popularmovies.fragments.ReviewFragment;
@@ -53,7 +57,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        movieLab = MovieLab.getInstance(this);
         movie = getIntent().getExtras().getParcelable(getString(R.string.movie_intent_key));
 
         initViews();
@@ -97,7 +100,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         releaseDate = (TextView) findViewById(R.id.tv_movie_language_date);
-        movieTitle = (TextView) findViewById(R.id.tv_movie_title);
+        movieTitle = (TextView) findViewById(R.id.movie_title_TV);
         movieRating = (TextView) findViewById(R.id.movie_ratings);
         movieDetailsTab = (TabLayout) findViewById(R.id.movie_details_tab);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -117,8 +120,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                movieLab.addFavouriteMovie(movie);
+                ContentValues contentValues = MovieLab.getContentValues(movie);
+
+                Uri uri = MovieDetailActivity.this.getContentResolver().insert(
+                        FavouriteMovieEntry.CONTENT_URI, contentValues
+                );
+                if( uri != null){
                 Toast.makeText(MovieDetailActivity.this, getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

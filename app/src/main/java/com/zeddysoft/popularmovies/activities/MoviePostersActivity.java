@@ -21,7 +21,9 @@ import com.android.volley.VolleyError;
 import com.zeddysoft.popularmovies.R;
 import com.zeddysoft.popularmovies.adapters.MovieAdapter;
 import com.zeddysoft.popularmovies.apis.ApiManager;
+import com.zeddysoft.popularmovies.database.FavouriteMovieCursorWrapper;
 import com.zeddysoft.popularmovies.database.MovieContract;
+import com.zeddysoft.popularmovies.database.MovieContract.FavouriteMovieEntry;
 import com.zeddysoft.popularmovies.database.MovieDbHelper;
 import com.zeddysoft.popularmovies.database.MovieLab;
 import com.zeddysoft.popularmovies.models.Movie;
@@ -40,7 +42,6 @@ public class MoviePostersActivity extends AppCompatActivity
     private GridView moviePosterView;
     private ProgressBar progressBar;
     private List<Movie> movies;
-    private MovieLab movieLab;
     private MovieAdapter movieAdapter;
 
     @Override
@@ -48,7 +49,6 @@ public class MoviePostersActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        movieLab = MovieLab.getInstance(this);
 
         moviePosterView = (GridView) findViewById(R.id.movie_posters_view);
         moviePosterView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,7 +123,15 @@ public class MoviePostersActivity extends AppCompatActivity
     }
 
     private void showFavouriteMovies() {
-        List<Movie> movies = movieLab.getFavouriteMovies();
+        Cursor cursor = getContentResolver().query(
+                FavouriteMovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<Movie> movies = MovieLab.getFavouriteMovies(new FavouriteMovieCursorWrapper(cursor));
         movieAdapter.update(movies);
     }
 

@@ -3,6 +3,7 @@ package com.zeddysoft.popularmovies.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zeddysoft.popularmovies.database.MovieContract.FavouriteMovieEntry;
@@ -16,40 +17,9 @@ import java.util.List;
  */
 
 public class MovieLab {
-    private Context mContext;
-    private SQLiteDatabase mDb;
 
-    private static MovieLab movieLab;
 
-    private MovieLab(Context context) {
-        mContext = context.getApplicationContext();
-        mDb = new MovieDbHelper(context).getWritableDatabase();
-    }
-
-    public static MovieLab getInstance(Context context) {
-        return movieLab == null ? new MovieLab(context) : movieLab;
-    }
-
-    private FavouriteMovieCursorWrapper queryFavouriteMovies() {
-        Cursor cursor = mDb.query(
-                FavouriteMovieEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        return new FavouriteMovieCursorWrapper(cursor);
-
-    }
-
-    public void addFavouriteMovie(Movie movie) {
-        ContentValues contentValues = getContentValues(movie);
-        mDb.insert(FavouriteMovieEntry.TABLE_NAME, null, contentValues);
-    }
-
-    private static ContentValues getContentValues(Movie movie) {
+    public static ContentValues getContentValues(Movie movie) {
 
         ContentValues contentValues = new ContentValues();
 
@@ -64,10 +34,9 @@ public class MovieLab {
 
     }
 
-    public List<Movie> getFavouriteMovies() {
+    public static List<Movie> getFavouriteMovies(FavouriteMovieCursorWrapper cursorWrapper) {
 
         List<Movie> favouriteMovies = new ArrayList<>();
-        FavouriteMovieCursorWrapper cursorWrapper = queryFavouriteMovies();
 
         try {
             cursorWrapper.moveToFirst();
