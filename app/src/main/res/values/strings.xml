@@ -23,6 +23,6 @@
     <string name="overview_data_key">overview.key</string>
     <string name="trailer_data_key">trailer.key</string>
     <string name="review_data_key">review.key</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_poster_data_key">movies.key</string>
     <string name="total_rating">/10</string>
 </resources>

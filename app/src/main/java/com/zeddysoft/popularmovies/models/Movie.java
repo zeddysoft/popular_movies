@@ -28,8 +28,6 @@ public class Movie implements Parcelable{
         setId(jsonObject.getLong("id"));
     }
 
-    public Movie(){}
-
     protected Movie(Parcel in) {
         posterPath = in.readString();
         originalTitle = in.readString();
@@ -38,6 +36,8 @@ public class Movie implements Parcelable{
         releaseDate = in.readString();
         id = in.readLong();
     }
+
+    public Movie(){}
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override

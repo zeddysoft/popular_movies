@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.zeddysoft.popularmovies.utils.NetworkUtils;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviePostersActivity extends AppCompatActivity
@@ -65,12 +67,24 @@ public class MoviePostersActivity extends AppCompatActivity
 
         apiManager = ApiManager.getApiManager();
 
-        if (isPhoneConnectedToInternet()) {
-            showMostPopularMoviesOnly();
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(getString(R.string.movie_poster_data_key))) {
+                movies = savedInstanceState.getParcelableArrayList(getString(R.string.movie_poster_data_key));
+                showMovies();
+            }
         } else {
-            showMessage(R.string.no_network_message);
+            if (isPhoneConnectedToInternet()) {
+                showMostPopularMoviesOnly();
+            } else {
+                showMessage(R.string.no_network_message);
+            }
         }
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(getString(R.string.movie_poster_data_key), (ArrayList<Movie>) movies);
     }
 
     private void showMessage(int messageId) {
@@ -129,12 +143,16 @@ public class MoviePostersActivity extends AppCompatActivity
         progressBar.setVisibility(View.GONE);
         try {
             movies = MovieParser.parseMovieResponse(response);
-            movieAdapter = new MovieAdapter(this, movies);
-            moviePosterView.setAdapter(movieAdapter);
+            showMovies();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showMovies() {
+        movieAdapter = new MovieAdapter(this, movies);
+        moviePosterView.setAdapter(movieAdapter);
     }
 
     @Override
