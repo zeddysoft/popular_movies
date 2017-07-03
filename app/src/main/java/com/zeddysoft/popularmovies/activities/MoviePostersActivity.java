@@ -43,6 +43,7 @@ public class MoviePostersActivity extends AppCompatActivity
     private ProgressBar progressBar;
     private List<Movie> movies;
     private MovieAdapter movieAdapter;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +67,16 @@ public class MoviePostersActivity extends AppCompatActivity
 
         apiManager = ApiManager.getApiManager();
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(getString(R.string.movie_poster_data_key))) {
-                movies = savedInstanceState.getParcelableArrayList(getString(R.string.movie_poster_data_key));
-                showMovies();
-            }
+        if (!isPhoneConnectedToInternet()) {
+            showMessage(R.string.no_network_message);
         } else {
-            if (isPhoneConnectedToInternet()) {
-                showMostPopularMoviesOnly();
+            if (savedInstanceState != null) {
+                if (savedInstanceState.containsKey(getString(R.string.movie_poster_data_key))) {
+                    movies = savedInstanceState.getParcelableArrayList(getString(R.string.movie_poster_data_key));
+                    showMovies();
+                }
             } else {
-                showMessage(R.string.no_network_message);
+                showMostPopularMoviesOnly();
             }
         }
     }
@@ -83,11 +84,15 @@ public class MoviePostersActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(getString(R.string.movie_poster_data_key), (ArrayList<Movie>) movies);
+        if (alertDialog != null)
+            alertDialog.dismiss();
+
+        if (movies != null)
+            outState.putParcelableArrayList(getString(R.string.movie_poster_data_key), (ArrayList<Movie>) movies);
     }
 
     private void showMessage(int messageId) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setMessage(getString(messageId));
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -156,6 +161,7 @@ public class MoviePostersActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
 
     public void showMovies() {
         movieAdapter = new MovieAdapter(this, movies);

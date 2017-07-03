@@ -14,7 +14,7 @@
     <string name="trailers">Trailers:</string>
 
     <!-- Insert your API key here -->
-    <string name="api_key"></string>
+    <string name="api_key">c0040567876f8c727e4a4ff2df55fdec</string>
 
     <string name="base_url">http://api.themoviedb.org/3</string>
     <string name="popular_movie_endpoint">/movie/popular</string>
