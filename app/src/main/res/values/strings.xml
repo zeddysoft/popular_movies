@@ -4,6 +4,7 @@
     <string name="movie_intent_key">movie</string>
     <string name="mark_as_favourite">MARK AS \nFAVOURITE</string>
     <string name="mark_as_favourite_response">Added to your favourite list</string>
+    <string name="favourite_already_added">Already added to your favourite list</string>
     <string name="movie_rating_suffix">/10</string>
     <string name="movie_image_base_url">http://image.tmdb.org/t/p/w185/</string>
     <string name="sort_by_most_popular">Popular movies</string>

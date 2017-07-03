@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
@@ -87,7 +88,8 @@ public class MovieContentProvider extends ContentProvider {
 
         switch (match) {
             case FAVOURITE_MOVIES:
-                long id = db.insert(FavouriteMovieEntry.TABLE_NAME, null, values);
+
+                long id = db.insertOrThrow(FavouriteMovieEntry.TABLE_NAME, null, values);
                 if (id > 0) {
                     returnUri = ContentUris.withAppendedId(FavouriteMovieEntry.CONTENT_URI, id);
                 } else {

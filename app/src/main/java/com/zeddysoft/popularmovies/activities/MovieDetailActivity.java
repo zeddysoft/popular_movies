@@ -35,6 +35,7 @@ import com.zeddysoft.popularmovies.models.Trailer;
 import com.zeddysoft.popularmovies.utils.ZoomOutPageTransformer;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -122,11 +123,15 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ContentValues contentValues = MovieLab.getContentValues(movie);
 
-                Uri uri = MovieDetailActivity.this.getContentResolver().insert(
-                        FavouriteMovieEntry.CONTENT_URI, contentValues
-                );
-                if( uri != null){
-                Toast.makeText(MovieDetailActivity.this, getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
+                try{
+                    Uri uri = MovieDetailActivity.this.getContentResolver().insert(
+                            FavouriteMovieEntry.CONTENT_URI, contentValues
+                    );
+                    if( uri != null){
+                        Toast.makeText(MovieDetailActivity.this, getString(R.string.mark_as_favourite_response), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception ex){
+                    Toast.makeText(MovieDetailActivity.this, getString(R.string.favourite_already_added), Toast.LENGTH_SHORT).show();
                 }
             }
         });
